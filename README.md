@@ -51,4 +51,17 @@ cd SchedInspector
 pip install -r requirements.txt
 ```
 
+# Mac M1
+
+```shell
+conda create -n spinningup python=3.9
+conda activate spinningup
+
+conda install -c conda-forge openmpi=4.1.6
+conda install -c conda-forge mpi4py==3.1.6
+
+conda install -c conda-forge atari_py==0.2.9 box2d-py==2.3.8
+
+pip install -r requirements.txt
+```
 

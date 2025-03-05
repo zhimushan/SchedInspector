@@ -1,13 +1,16 @@
 import numpy as np
-import tensorflow as tf
+try:
+    import tensorflow.compat.v1 as tf
+except ImportError:
+    import tensorflow as tf
 import gym
 import os
 import sys
 import time
-from spinup.utils.logx import EpochLogger
-from spinup.utils.mpi_tf import MpiAdamOptimizer, sync_all_params
-from spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
-from spinup.utils.logx import restore_tf_graph
+from utils.logx import EpochLogger
+from utils.mpi_tf import MpiAdamOptimizer, sync_all_params
+from utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
+from utils.logx import restore_tf_graph
 import os.path as osp
 
 from HPCSimSkip import *
@@ -285,6 +288,7 @@ def ppo(workload_file, model_path, ac_kwargs=dict(), seed=0,
     logger.save_config(locals())
 
     tf.set_random_seed(seed)
+    # tf.random.set_seed(seed)
     np.random.seed(seed)
 
     env = HPCEnvSkip(shuffle=shuffle, backfil=backfil, skip=skip, job_score_type=score_type,
@@ -527,7 +531,7 @@ if __name__ == '__main__':
     parser.add_argument('--sched_algo', type=int, default=4)
     args = parser.parse_args()
 
-    from spinup.utils.run_utils import setup_logger_kwargs
+    from utils.run_utils import setup_logger_kwargs
 
     # build absolute path for using in hpc_env.
     current_dir = os.getcwd()
